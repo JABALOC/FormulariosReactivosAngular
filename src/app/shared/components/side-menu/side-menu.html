@@ -1,0 +1,33 @@
+<h2>Páginas</h2>
+<hr>
+
+<h3 class="mt-3">Reactive</h3>
+
+@for (item of reactiveMenu; track item) {
+  <ul class="list-group">
+    <li class="list-group-item">
+      <a [routerLink]="item.route" routerLinkActive="active">{{ item.title }}</a>
+    </li>
+  </ul>
+}
+
+<h3 class="mt-3">Registro</h3>
+@for (item of authMenu; track item) {
+  <ul class="list-group">
+    <li class="list-group-item">
+      <a [routerLink]="item.route" routerLinkActive="active">{{ item.title }}</a>
+    </li>
+  </ul>
+
+}
+
+<h3 class="mt-3">Country</h3>
+@for (item of countryMenu; track item) {
+  <ul class="list-group">
+    <li class="list-group-item">
+      <a [routerLink]="item.route" routerLinkActive="active">{{ item.title }}</a>
+    </li>
+  </ul>
+
+}
+
