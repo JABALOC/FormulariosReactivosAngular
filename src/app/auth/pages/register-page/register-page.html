@@ -58,38 +58,47 @@
             </div>
 
             <!-- Password -->
-            <div class="row mb-3">
+
+              <div class="row mb-3">
                 <label class="col-sm-3 col-form-label">Password</label>
+
                 <div class="col-sm-9">
-                    <input type="password"
-                           class="form-control"
-                           placeholder="Password de su cuenta"
-                           formControlName="password">
+                  <input type="password"
+                  class="form-control"
+                  placeholder="Password de su cuenta"
+                  formControlName="password">
 
-                    @if(formUtils.isValidField(myForm, 'password')) {
+                  @if(formUtils.isValidField(myForm, 'password')) {
                     <span class="form-text text-danger">
-                         {{ formUtils.getFieldError(myForm, 'password') }}
+                      {{ formUtils.getFieldError(myForm, 'password') }}
                     </span>
-                    }
+                  }
                 </div>
-            </div>
+              </div>
 
-            <!-- Password2 -->
-            <div class="row mb-3">
+              <!-- Password2 -->
+              <div class="row mb-3">
                 <label class="col-sm-3 col-form-label">Confirmar</label>
                 <div class="col-sm-9">
-                    <input type="password"
-                           class="form-control"
-                           placeholder="Confirmar la contraseña"
-                           formControlName="password2">
+                  <input type="password"
+                  class="form-control"
+                  placeholder="Confirmar la contraseña"
+                  formControlName="password2">
 
-                     @if ( formUtils.isValidField(myForm, 'password2')) {
-                      <span class="form-text text-danger">
-                        {{ formUtils.getFieldError(myForm, "password2") }}
-                      </span>
-          }
+                  @if ( formUtils.isValidField(myForm, 'password2')) {
+                    <span class="form-text text-danger">
+                      {{ formUtils.getFieldError(myForm, "password2") }}
+                    </span>
+                  } @else if (myForm.errors) {
+                    <span class="form-text text-danger">
+                      Las contraseñas no coinciden
+                    </span>
+                  }
                 </div>
-            </div>
+              </div>
+
+
+
 
 
             <div class="row">

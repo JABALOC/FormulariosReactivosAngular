@@ -1,5 +1,13 @@
 import { AbstractControl, FormArray, FormGroup, ValidationErrors } from "@angular/forms";
+import { timeInterval } from "rxjs";
 
+async function sleep() {
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      resolve(true);
+    }, 2500);
+  });
+}
 
 
 export class FormUtils {
@@ -32,8 +40,14 @@ export class FormUtils {
           }
           return 'Error de patrón contra expresión regular';
 
+        case 'emailTaken':
+          return 'El correo electrónico ya está registrado';
+
+        case 'nickName':
+          return 'El username ya está registrado';
+
         default:
-          return 'Error de validación no controlado';
+          return `Error de validación no controlado ${key}`;
       }
     }
     return null;
@@ -78,6 +92,36 @@ export class FormUtils {
       return fieldValue1 === fieldValue2 ? null : {passwordNotEqual: true};
     }
 
+  }
+
+  static async checkServerResponse(control: AbstractControl): Promise<ValidationErrors | null> {
+    console.log('validando contra servidor')
+
+    await sleep();
+
+    const formValue = control.value
+
+    if (formValue === 'hola@mundo.com') {
+      return {
+        emailTaken: true
+      }
+    }
+    return null;
+  }
+
+  static async nickNameInUse(control: AbstractControl): Promise<ValidationErrors | null> {
+
+    const nickName = control.value
+
+    if (nickName === 'jabaloc') {
+      console.log(nickName);
+      return {
+
+        nickName : true
+      }
+    }
+
+    return null;
   }
 
 }

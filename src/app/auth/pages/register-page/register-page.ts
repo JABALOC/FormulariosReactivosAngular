@@ -20,14 +20,20 @@ export class RegisterPage {
   myForm: FormGroup = this.fb.group (
     {
     name: ['', [Validators.required, Validators.pattern(this.formUtils.namePattern) ]],
-    email: ['', [Validators.required, Validators.pattern(FormUtils.emailPattern)]],
+    email: [
+      '',
+      [Validators.required, Validators.pattern(FormUtils.emailPattern)],
+      [FormUtils.checkServerResponse],
+    ],
+
     username: [
       '',
        [
         Validators.required,
         Validators.minLength(6),
         Validators.pattern(FormUtils.notOnlySpacesPattern)
-      ]
+      ],
+      [ FormUtils.nickNameInUse],
     ],
     password: ['', [Validators.required, Validators.minLength(6)]],
     password2: ['', [Validators.required]],
@@ -46,6 +52,8 @@ export class RegisterPage {
   //   }
 
   // }
+
+
 
   onSubmit() {
     console.log(this.myForm.value);
