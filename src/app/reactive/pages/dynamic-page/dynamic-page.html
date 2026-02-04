@@ -1,7 +1,7 @@
 <h2>Reactivos: <small> Dinámicos </small></h2>
 <hr>
 
-<form autocomplete="off" [formGroup]="myForm">
+<form autocomplete="off" [formGroup]="myForm" (ngSubmit)="onSave()" (ngSubmit)="onTouch()">
 
     <!-- Nombre -->
     <div class="mb-3 row">
@@ -12,24 +12,33 @@
                    formControlName="name"
 
                    />
-            <span class="form-text text-danger">
-                   error message
-            </span>
+            @if(formUtils.isValidField(myForm, 'name')) {
+              <span class="form-text text-danger">
+                     error message
+              </span>
+
+            }
         </div>
     </div>
 
     <!-- Agregar Favorito -->
     <div class="mb-3 row">
-        <label class="col-sm-3 col-form-label">Agregar</label>
+        <label class="col-sm-3 col-form-label" >Agregar</label>
         <div class="col-sm-9">
 
             <div class="input-group">
                 <input class="form-control"
-                       placeholder="Agregar favorito">
+                       placeholder="Agregar favorito"
+                       [formControl]="newFavorite"
+                       (keydown.enter)="addFavorites()"
+                       (keydown.enter)="$event.preventDefault()"
+                       >
+
 
 
                 <button class="btn btn-outline-primary"
-                        type="button">
+                        type="button"
+                        (click)="addFavorites()">
                     Agregar favorito
                 </button>
             </div>
@@ -53,15 +62,27 @@
                     >
 
                     <button class="btn btn-outline-danger"
-                            type="button">
+                            type="button"
+                            (click)="deleteFavorite(i)">
                       Eliminar
                   </button>
                 </div>
-                <span class="form-text text-danger">
-                   Este campo es requerido
-                </span>
+
+                @if(formUtils.isValidFieldToArray(favoriteGames , i)) {
+                  <span class="form-text text-danger">
+                     Este campo es requerido
+                  </span>
+
+                }
+
 
             </div>
+          }
+          @if(favoriteGames.length < 2) {
+            <span class="form-text text-danger">
+                      Mínimo de dos favoritos
+             </span>
+
           }
 
 
@@ -73,9 +94,9 @@
     <div class="row">
         <div class="col-sm-12">
             <button type="submit"
-                    class="btn btn-primary float-end"
-                    >
+                    class="btn btn-primary float-end">
                     <!-- [disabled]="myForm.invalid" -->
+
                 Guardar
             </button>
         </div>
@@ -92,6 +113,16 @@
 
 <span>Value</span>
 <pre>{{ myForm.value | json }}</pre>
+<br>
+
+<span>Errores</span>
+<pre>{{ myForm.controls['name'].errors | json }}</pre>
+<pre>{{ myForm.controls['favoriteGames'].errors | json }}</pre>
+@for (item of favoriteGames.controls; track $index; let i = $index) {
+  <pre>{{ myForm.controls['favoriteGames'].errors | json }}</pre>
+  <p>{{item.errors}}</p>
+  <!-- <pre>{{ myForm.controls[i].errors | json }}</pre>-->
+}
 <br>
 
 <span>Agregar Juego</span>
